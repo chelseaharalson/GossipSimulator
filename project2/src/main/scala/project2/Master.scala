@@ -1,7 +1,6 @@
 package project2
 
 import akka.actor._
-import scala.util.Random
 
 /**
  * Created by chelsea on 9/15/15.

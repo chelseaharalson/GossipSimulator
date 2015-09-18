@@ -1,6 +1,7 @@
 package project2
 
 import akka.actor._
+import scala.util.Random
 
 /**
  * Created by chelsea on 9/15/15.
@@ -24,7 +25,11 @@ object Main {
       System.exit(0)
     }
 
-    val t = new Topology(toppologyType.indexOf(args(1)))
+    val t = new Topology()
+    t.numOfNodes = args(0).toInt
+    t.idx = 3
+    t.topType = toppologyType.indexOf(args(1))
+    println("Next Node = " + t.findNode())
   }
 
   // Checks if parameter is a number
