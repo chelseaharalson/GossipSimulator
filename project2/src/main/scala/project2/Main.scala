@@ -30,6 +30,23 @@ object Main {
     t.idx = 3
     t.topType = toppologyType.indexOf(args(1))
     println("Next Node = " + t.findNode())
+
+
+
+
+
+    var sideNodes = 3
+    val cube = new Cube()
+    cube.build(cube.generateCubeGraph(sideNodes))
+
+    System.out.println("Node execution order: ")
+    cube.BFT()
+
+    System.out.println("Nodes links:")
+    cube.printAL()
+
+    System.out.println("Nodes on Layers:")
+    cube.printLayers(sideNodes)
   }
 
   // Checks if parameter is a number
