@@ -23,7 +23,9 @@ class Topology() {
       }
       // 3D
       case 1 => {
-
+        var sideNodes = 3
+        val cube = new Cube()
+        nextNode = cube.getRandomCubeNeighbor(cube.generateCubeGraph(sideNodes),idx)
       }
       // Line
       case 2 => {

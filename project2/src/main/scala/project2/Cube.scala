@@ -1,11 +1,11 @@
 package project2
 
 import java.util
-
 import scala.collection.mutable.Queue
 import scala.collection.mutable.ArrayBuffer
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.LinkedList
+import scala.util.Random
 import java.util.Scanner
 
 /**
@@ -59,11 +59,14 @@ class Cube {
       }
     }
 
-    for (i <- 0 to neighborList.size-1) {
+    // Prints out neighbor list - used for debugging
+    /*for (i <- 0 to neighborList.size-1) {
       println(neighborList(i))
-    }
+    }*/
 
-    2
+    var r = Random.nextInt(counter-1)
+    //println("RANDOM: " + neighborList(r))
+    neighborList(r)
   }
 
   def checkDuplicates(num: Int): Boolean = {

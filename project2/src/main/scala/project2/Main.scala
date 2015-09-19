@@ -30,14 +30,6 @@ object Main {
     t.idx = 3
     t.topType = toppologyType.indexOf(args(1))
     println("Next Node = " + t.findNode())
-
-
-
-
-
-    var sideNodes = 3
-    val cube = new Cube()
-    cube.getRandomCubeNeighbor(cube.generateCubeGraph(sideNodes),13)
   }
 
   // Checks if parameter is a number
