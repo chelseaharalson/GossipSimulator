@@ -48,7 +48,6 @@ class Topology() {
         var sideNodes = 3
         val cube = new Cube()
         cube.imperfect = true
-        // if imperfect
         nextNode = cube.getRandomCubeNeighbor(cube.generateCubeGraph(sideNodes),idx)
       }
     }

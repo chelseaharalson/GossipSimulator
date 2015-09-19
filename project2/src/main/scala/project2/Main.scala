@@ -27,7 +27,7 @@ object Main {
 
     val t = new Topology()
     t.numOfNodes = args(0).toInt
-    t.idx = 3
+    t.idx = 13
     t.topType = toppologyType.indexOf(args(1))
     println("Next Node = " + t.findNode())
   }

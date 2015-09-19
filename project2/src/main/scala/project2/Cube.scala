@@ -7,6 +7,7 @@ import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.LinkedList
 import scala.util.Random
 import java.util.Scanner
+import scala.util.control.Breaks._
 
 /**
  * Created by chelsea on 9/17/15.
@@ -61,13 +62,29 @@ class Cube {
       }
     }
 
-    // If imperfect, then add into neighbor list a random node that is NOT in the neighborlist
-    // Also add to count
+    // If imperfect, then add into neighborList a random node that is NOT in the neighborList
+    if (imperfect == true) {
+      breakable {
+        for (i <- 0 to cubeList.size - 1) {
+          if (checkDuplicates(cubeList(i)(1)) == false) {
+            neighborList(counter) = cubeList(i)(1)
+            counter = counter + 1
+            break
+          }
+          if (checkDuplicates(cubeList(i)(0)) == false) {
+            neighborList(counter) = cubeList(i)(0)
+            counter = counter + 1
+            break
+          }
+        }
+      }
+    }
 
     // Prints out neighbor list - used for debugging
-    /*for (i <- 0 to neighborList.size-1) {
+    println("Neighbor List: ")
+    for (i <- 0 to neighborList.size-1) {
       println(neighborList(i))
-    }*/
+    }
 
     var r = Random.nextInt(counter-1)
     //println("RANDOM: " + neighborList(r))
@@ -89,7 +106,7 @@ class Cube {
    * Input generator for a cube
    */
   def generateCubeGraph(n: Int): String = {
-    var SIDE = n   // Number of nodes in one side of the cube
+    var SIDE = n    // Number of nodes in one side of the cube
     var links = ""  // Holds the final output
     var link = 0    // Counts the number of links
 
