@@ -39,14 +39,14 @@ object Main {
     val cube = new Cube()
     cube.build(cube.generateCubeGraph(sideNodes))
 
-    System.out.println("Node execution order: ")
+    /*System.out.println("Node execution order: ")
     cube.BFT()
 
     System.out.println("Nodes links:")
     cube.printAL()
 
     System.out.println("Nodes on Layers:")
-    cube.printLayers(sideNodes)
+    cube.printLayers(sideNodes)*/
   }
 
   // Checks if parameter is a number
