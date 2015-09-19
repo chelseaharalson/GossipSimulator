@@ -1,10 +1,5 @@
 package project2
 
-import java.util
-import scala.collection.mutable.Queue
-import scala.collection.mutable.ArrayBuffer
-import scala.collection.mutable.ListBuffer
-import scala.collection.mutable.LinkedList
 import scala.util.Random
 import java.util.Scanner
 import scala.util.control.Breaks._
@@ -13,9 +8,6 @@ import scala.util.control.Breaks._
  * Created by chelsea on 9/17/15.
  */
 
-/**
- * Cube creator
- */
 class Cube {
   var NODES: Int = 0
   var EDGES: Int = 144
