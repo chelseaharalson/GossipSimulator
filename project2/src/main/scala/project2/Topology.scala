@@ -25,7 +25,7 @@ class Topology() {
       case 1 => {
         var sideNodes = 3
         val cube = new Cube()
-        nextNode = cube.getRandomCubeNeighbor(cube.generateCubeGraph(sideNodes),idx)
+        nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
       }
       // Line
       case 2 => {
@@ -48,7 +48,7 @@ class Topology() {
         var sideNodes = 3
         val cube = new Cube()
         cube.imperfect = true
-        nextNode = cube.getRandomCubeNeighbor(cube.generateCubeGraph(sideNodes),idx)
+        nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
       }
     }
     nextNode
