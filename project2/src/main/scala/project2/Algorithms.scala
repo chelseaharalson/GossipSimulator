@@ -6,4 +6,4 @@ package project2
 
 case class Gossip()
 case class PushSum(s: Double, w: Double)
-case class SendRumor(node: Int, message: String, top: Int)
+case class Rumor(message: String)

@@ -21,7 +21,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         }
         for (i <- 0 to numNodes) {
           // Create the actors
-          context.actorOf(Props(new Worker(numNodes, top, alg)), i.toString)
+          context.actorOf(Props(new Worker(i, numNodes, top, alg)), i.toString)
         }
         // Starting time for the algorithm..
         startTime = System.currentTimeMillis()
@@ -37,7 +37,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
             var randomNode = Random.nextInt(numNodes).toString()
             var message = "The TA is annoying"
-            context.actorSelection(randomNode) ! SendRumor(randomNode.toInt,message,top)
+            context.actorSelection(randomNode) ! Rumor(message)
           }
           // PushSum
           case 1 => {

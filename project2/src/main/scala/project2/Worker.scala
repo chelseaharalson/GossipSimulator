@@ -6,20 +6,21 @@ import scala.util.Random
 /**
  * Created by chelsea on 9/15/15.
  */
-class Worker(numOfNodes: Int, top: Int, alg: Int) extends Actor {
+class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
+
+  var numOfMessages: Int = 0
 
   def receive = {
     // Gossip Rumor
-    case SendRumor(node,message,top) => {
-      println("Node: " + node + " Message: " + message + " Topology Type: " + top)
+    case Rumor(message) => {
+      println("Message: " + message)
       val t = new Topology()
-      t.topType = top
       t.numOfNodes = numOfNodes
+      t.topType = top
+      t.idx = idx
       val nextNode = t.findNode()
       //println(t.findNode())
-      for (i <- 0 to 10) {
-        context.actorSelection("../" + t.findNode().toString()) ! SendRumor(nextNode, message, t.topType)
-      }
+      context.actorSelection("../" + nextNode.toString()) ! Rumor(message)
     }
     case msg: String => {
       println(msg)
