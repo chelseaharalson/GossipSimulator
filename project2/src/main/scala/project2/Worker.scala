@@ -9,7 +9,7 @@ import scala.util.Random
 class Worker(numOfNodes: Integer, topology: String, alg: String) extends Actor {
 
   def receive = {
-    case PushSum(s, w) => {
+    case Gossip => {
 
     }
   }

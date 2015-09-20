@@ -9,7 +9,7 @@ class Topology() {
 
   var idx: Int = 0
   var topType: Int = 0
-  var numOfNodes: Integer = 10 // will change
+  var numOfNodes: Integer = 0
 
   def findNode() = {
     var nextNode = Random.nextInt(numOfNodes)
@@ -23,8 +23,8 @@ class Topology() {
       }
       // 3D
       case 1 => {
-        var sideNodes = 3
         val cube = new Cube()
+        var sideNodes = cube.getCubeSize(numOfNodes)
         nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
       }
       // Line
@@ -45,8 +45,8 @@ class Topology() {
       }
       // Imperfect 3D
       case 3 => {
-        var sideNodes = 3
         val cube = new Cube()
+        var sideNodes = cube.getCubeSize(numOfNodes)
         cube.imperfect = true
         nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
       }

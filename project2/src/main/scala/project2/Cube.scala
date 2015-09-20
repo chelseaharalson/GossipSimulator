@@ -1,5 +1,6 @@
 package project2
 
+import scala.math._
 import scala.util.Random
 import java.util.Scanner
 import scala.util.control.Breaks._
@@ -10,9 +11,8 @@ import scala.util.control.Breaks._
 
 class Cube {
   var NODES: Int = 0
-  var EDGES: Int = 144
+  var EDGES: Int = 0
 
-  var cubeList = Array.ofDim[Int](EDGES,2)
   var neighborList = Array.ofDim[Int](6)
   var imperfectList = Array.ofDim[Int](7)
 
@@ -25,6 +25,7 @@ class Cube {
     var scan: Scanner = new Scanner(input)
     NODES = scan.nextInt()
     EDGES = scan.nextInt()
+    var cubeList = Array.ofDim[Int](EDGES,2)
     println("Nodes: " + NODES + "    Edges: " + EDGES)
 
     for (i <- 0 to EDGES-1) {
@@ -135,5 +136,14 @@ class Cube {
     }
     // return #Nodes, #Edges, links ...
     "%d %d\n%s".format(SIDE*SIDE*SIDE, link, links)
+  }
+
+  // Gets smallest cube size
+  def getCubeSize(numOfNodes: Int): Int = {
+    var factor: Int = 3
+    while (numOfNodes > pow(factor,3)) {
+      factor = factor + 1
+    }
+    factor
   }
 }
