@@ -10,6 +10,7 @@ import scala.util.Random
 class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
   var startTime: Long = 0
+  var finishedCount: Int = 0
 
   def receive = {
     case msg: String => {
@@ -28,13 +29,6 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         alg match {
           // Gossip
           case 0 => {
-            //var randomNode = Random.nextInt(numNodes).toString()
-            //context.actorSelection(randomNode) ! "Hi from master and node: " + randomNode
-
-            //var randomNode = Random.nextInt(numNodes)
-            //var message = "The TA is annoying"
-            //context.actorOf(Props(new TopObj)) ! SendRumor(randomNode,message)
-
             var randomNode = Random.nextInt(numNodes).toString()
             var message = "The TA is annoying"
             context.actorSelection(randomNode) ! Rumor(message)
@@ -46,14 +40,12 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         }
       }
     }
-  }
-}
-
-/*class TopObj() extends Actor {
-  def receive = {
-    case SendRumor(node,message) => {
-      val t = new Topology()
-      sender ! t
+    case Finish() => {
+      finishedCount = finishedCount + 1
+      //println("Finished Count: " + finishedCount + "  Num of Nodes: " + numOfNodes)
+      if (numOfNodes-1 == finishedCount) {
+        System.exit(0)
+      }
     }
   }
-}*/
+}

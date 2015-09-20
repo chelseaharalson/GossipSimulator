@@ -25,6 +25,9 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
         //println(t.findNode())
         context.actorSelection("../" + nextNode.toString()) ! Rumor(message)
       }
+      if (numOfMessages == gossipTermination) {
+        context.parent ! Finish()
+      }
     }
     case msg: String => {
       println(msg)

@@ -5,5 +5,6 @@ package project2
  */
 
 case class Gossip()
-case class PushSum(s: Double, w: Double)
 case class Rumor(message: String)
+case class Finish()
+case class PushSum(s: Double, w: Double)
