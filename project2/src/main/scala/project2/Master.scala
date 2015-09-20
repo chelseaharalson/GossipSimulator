@@ -16,7 +16,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
     case msg: String => {
       if (msg.equals("CreateActors")) {
         //println("It works!!!")
-        var numNodes: Int = numOfNodes
+        val numNodes: Int = numOfNodes
         if (top == 1 || top == 3) {
           var numNodes = pow(numOfNodes,3).toInt
         }
@@ -29,8 +29,8 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         alg match {
           // Gossip
           case 0 => {
-            var randomNode = Random.nextInt(numNodes).toString()
-            var message = "The TA is annoying"
+            val randomNode = Random.nextInt(numNodes).toString()
+            val message = "The TA is annoying"
             context.actorSelection(randomNode) ! Rumor(message)
           }
           // PushSum
