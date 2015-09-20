@@ -6,7 +6,7 @@ import scala.util.Random
 /**
  * Created by chelsea on 9/15/15.
  */
-class Worker(numOfNodes: Integer, topology: String, alg: String) extends Actor {
+class Worker(numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
   def receive = {
     case Gossip => {

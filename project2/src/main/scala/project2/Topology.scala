@@ -24,12 +24,12 @@ class Topology() {
       // 3D
       case 1 => {
         val cube = new Cube()
-        var sideNodes = cube.getCubeSize(numOfNodes)
+        val sideNodes = cube.getCubeSize(numOfNodes)
         nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
       }
       // Line
       case 2 => {
-        var lr = Random.nextInt(2)
+        val lr = Random.nextInt(2)
         if (idx == 0) {
           nextNode = idx + 1
         }
@@ -46,7 +46,7 @@ class Topology() {
       // Imperfect 3D
       case 3 => {
         val cube = new Cube()
-        var sideNodes = cube.getCubeSize(numOfNodes)
+        val sideNodes = cube.getCubeSize(numOfNodes)
         cube.imperfect = true
         nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
       }

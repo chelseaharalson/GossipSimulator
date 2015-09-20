@@ -3,7 +3,6 @@ package project2
 import scala.math._
 import scala.util.Random
 import java.util.Scanner
-import scala.util.control.Breaks._
 
 /**
  * Created by chelsea on 9/17/15.
