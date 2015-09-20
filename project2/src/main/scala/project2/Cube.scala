@@ -21,10 +21,10 @@ class Cube {
   var imperfect: Boolean = false
 
   def getRandomCubeNeighbor(input: String, idx: Int): Int = {
-    var scan: Scanner = new Scanner(input)
+    val scan: Scanner = new Scanner(input)
     NODES = scan.nextInt()
     EDGES = scan.nextInt()
-    var cubeList = Array.ofDim[Int](EDGES,2)
+    val cubeList = Array.ofDim[Int](EDGES,2)
     println("Nodes: " + NODES + "    Edges: " + EDGES)
 
     for (i <- 0 to EDGES-1) {
@@ -66,7 +66,7 @@ class Cube {
     }
 
     // Prints out neighbor list - used for debugging
-    println("Neighbor List (3D): ")
+    /*println("Neighbor List (3D): ")
     for (i <- 0 to neighborList.size-1) {
       println(neighborList(i))
     }
@@ -75,9 +75,9 @@ class Cube {
     println("Neighbor List (3D Imperfect): ")
     for (i <- 0 to imperfectList.size-1) {
       println(imperfectList(i))
-    }
+    }*/
 
-    var r = Random.nextInt(counter-1)
+    val r = Random.nextInt(counter-1)
     //println("RANDOM: " + neighborList(r))
     neighborList(r)
   }
@@ -95,7 +95,7 @@ class Cube {
 
   // Generate the cube
   def generateCube(n: Int): String = {
-    var SIDE = n    // Number of nodes in one side of the cube
+    val SIDE = n    // Number of nodes in one side of the cube
     var links = ""  // Holds the final output
     var link = 0    // Counts the number of links
 

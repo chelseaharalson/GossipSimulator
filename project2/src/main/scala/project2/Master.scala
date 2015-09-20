@@ -37,7 +37,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
             var randomNode = Random.nextInt(numNodes).toString()
             var message = "The TA is annoying"
-            context.actorSelection(randomNode) ! SendRumor(randomNode.toInt,message)
+            context.actorSelection(randomNode) ! SendRumor(randomNode.toInt,message,top)
           }
           // PushSum
           case 1 => {

@@ -51,6 +51,7 @@ class Topology() {
         nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
       }
     }
+    //println("Next Node: " + nextNode)
     nextNode
   }
 
