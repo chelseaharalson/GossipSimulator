@@ -2,6 +2,7 @@ package project2
 
 import akka.actor._
 import scala.math._
+import scala.util.Random
 
 /**
  * Created by chelsea on 9/15/15.
@@ -21,6 +22,19 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         for (i <- 0 to numNodes) {
           // Create the actors
           context.actorOf(Props(new Worker(numNodes, top, alg)), i.toString)
+        }
+        // Starting time for the algorithm..
+        startTime = System.currentTimeMillis()
+        alg match {
+          // Gossip
+          case 0 => {
+            var randomNode = Random.nextInt(numNodes).toString()
+            context.actorSelection(randomNode) ! "Hi from master and node: " + randomNode
+          }
+          // PushSum
+          case 1 => {
+
+          }
         }
       }
     }

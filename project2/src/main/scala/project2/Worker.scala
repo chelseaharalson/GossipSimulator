@@ -9,8 +9,13 @@ import scala.util.Random
 class Worker(numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
   def receive = {
-    case Gossip => {
+    // Gossip
+    case 0 => {
 
+    }
+    case msg: String => {
+      println(msg)
+      //context.actorSelection("../") ! msg
     }
   }
 

@@ -31,11 +31,6 @@ object Main {
     t.topType = toppologyType.indexOf(args(1))
     println("Next Node = " + t.findNode())*/
 
-    //println("Algorithm: " + algorithm + "; Topology: " + topology + "; No. of Nodes: " + numActors)
-    /*if(topology == Grid2D || topology == imp2D)
-    {
-      numActors = getNextPerfectSquare(numActors)
-    }*/
     val system = ActorSystem("Gossip-PushSum")
     val master = system.actorOf(Props(new Master(args(0).toInt, topologyType.indexOf(args(1)), algorithmType.indexOf(args(2)))), "master")
     master ! "CreateActors"
