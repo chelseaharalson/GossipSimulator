@@ -28,8 +28,16 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         alg match {
           // Gossip
           case 0 => {
+            //var randomNode = Random.nextInt(numNodes).toString()
+            //context.actorSelection(randomNode) ! "Hi from master and node: " + randomNode
+
+            //var randomNode = Random.nextInt(numNodes)
+            //var message = "The TA is annoying"
+            //context.actorOf(Props(new TopObj)) ! SendRumor(randomNode,message)
+
             var randomNode = Random.nextInt(numNodes).toString()
-            context.actorSelection(randomNode) ! "Hi from master and node: " + randomNode
+            var message = "The TA is annoying"
+            context.actorSelection(randomNode) ! SendRumor(randomNode.toInt,message)
           }
           // PushSum
           case 1 => {
@@ -39,5 +47,13 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
       }
     }
   }
-
 }
+
+/*class TopObj() extends Actor {
+  def receive = {
+    case SendRumor(node,message) => {
+      val t = new Topology()
+      sender ! t
+    }
+  }
+}*/
