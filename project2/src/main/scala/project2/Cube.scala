@@ -58,21 +58,12 @@ class Cube {
       for (i <- 0 to neighborList.size-1) {
         imperfectList(i) = neighborList(i)
       }
-
-      breakable {
-        for (i <- 0 to cubeList.size - 1) {
-          if (checkDuplicates(cubeList(i)(1)) == false) {
-            imperfectList(counter) = cubeList(i)(1)
-            counter = counter + 1
-            break
-          }
-          if (checkDuplicates(cubeList(i)(0)) == false) {
-            imperfectList(counter) = cubeList(i)(0)
-            counter = counter + 1
-            break
-          }
-        }
+      var randNode = Random.nextInt(NODES)
+      // Go through neighborList and assign random number that is not found in there
+      while (neighborList.indexOf(randNode) > 0) {
+        randNode = Random.nextInt(NODES)
       }
+      imperfectList(counter) = randNode
     }
 
     // Prints out neighbor list - used for debugging
