@@ -3,6 +3,7 @@ package project2
 import scala.math._
 import scala.util.Random
 import java.util.Scanner
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by chelsea on 9/17/15.
@@ -99,15 +100,21 @@ class Cube {
     var links = ""  // Holds the final output
     var link = 0    // Counts the number of links
 
+    //var cubeArray = Array.ofDim[Int](EDGES,2)
+    //var cubeArr = new ArrayBuffer[ArrayBuffer[Int]]
+    //var cubeA = ArrayBuffer[Int](EDGES,2)
+
     for (row <- 0 to SIDE) {
       for (col <- 0 to SIDE) {
         for (depth <- 0 to SIDE) {
-          var current = depth + (col * SIDE) + (row * SIDE * SIDE)
+          val current = depth + (col * SIDE) + (row * SIDE * SIDE)
 
           // If not last depth
           if(depth != SIDE-1) {
             links += "%d %d\n".format(current, current+1)
             link = link + 1
+            //cubeArr(row,col) += (current, current+1)
+            //cubeArray(row,col) = current
           }
 
           // If not last col

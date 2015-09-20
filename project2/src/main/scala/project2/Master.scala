@@ -11,14 +11,15 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
   var startTime: Long = 0
   var finishedCount: Int = 0
+  var numNodes: Int = 0
 
   def receive = {
     case msg: String => {
       if (msg.equals("CreateActors")) {
         //println("It works!!!")
-        val numNodes: Int = numOfNodes
+        numNodes = numOfNodes
         if (top == 1 || top == 3) {
-          var numNodes = pow(numOfNodes,3).toInt
+          numNodes = pow(numOfNodes,3).toInt
         }
         for (i <- 0 to numNodes) {
           // Create the actors
@@ -42,8 +43,10 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
     }
     case Finish() => {
       finishedCount = finishedCount + 1
-      //println("Finished Count: " + finishedCount + "  Num of Nodes: " + numOfNodes)
-      if (numOfNodes-1 == finishedCount) {
+      println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
+      //val n = numNodes-1
+      if (numNodes == finishedCount) {
+        //println("Test")
         System.exit(0)
       }
     }
