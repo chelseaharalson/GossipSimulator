@@ -46,7 +46,8 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
       println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
       //val n = numNodes-1
       if (numNodes == finishedCount) {
-        //println("Test")
+        val b = System.currentTimeMillis - startTime
+        println("Time: " + b + " ms")
         System.exit(0)
       }
     }
