@@ -36,7 +36,7 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
       //println("Num Of Messages: " + numOfMessages + "   Index: " + idx)
       if (numOfMessages == gossipTermination) {
         println("Index Finished: " + idx)
-        context.parent ! Finish()
+        context.parent ! FinishGossip()
       }
     }
     case PushSum(ps,pw) => {
@@ -58,6 +58,9 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
           val nextNode = t.findNode()
           context.actorSelection("../" + nextNode.toString()) ! PushSum(s, w)
         }
+      }
+      if (cycleCounter == 3) {
+        context.parent ! FinishPushSum(s, w)
       }
     }
     case msg: String => {

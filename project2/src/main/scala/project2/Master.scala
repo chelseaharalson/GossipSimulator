@@ -42,7 +42,17 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         }
       }
     }
-    case Finish() => {
+    case FinishGossip() => {
+      finishedCount = finishedCount + 1
+      println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
+      //val n = numNodes-1
+      if (numNodes == finishedCount) {
+        val b = System.currentTimeMillis - startTime
+        println("Time: " + b + " ms")
+        System.exit(0)
+      }
+    }
+    case FinishPushSum(s,w) => {
       finishedCount = finishedCount + 1
       println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
       //val n = numNodes-1
