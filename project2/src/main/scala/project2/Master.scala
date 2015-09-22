@@ -36,7 +36,8 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
           }
           // PushSum
           case 1 => {
-
+            val randomNode = Random.nextInt(numNodes).toString()
+            context.actorSelection(randomNode) ! PushSum(randomNode.toDouble,0)
           }
         }
       }
