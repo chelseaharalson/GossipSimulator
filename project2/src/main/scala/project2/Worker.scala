@@ -9,7 +9,7 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
   var numOfMessages: Int = 0
   var gossipTermination: Int = 10
-  var numOfTimesSent: Int = 6
+  var numOfTimesSent: Int = 10
   var messageCounter: Int = 0
   var cycleCounter: Int = 0
   var s: Double = idx
@@ -30,6 +30,7 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
         // Guarantee finish if equal to number of nodes
         for (i <- 0 to numOfTimesSent) {
           val nextNode = t.findNode()
+          println("Index: " + t.idx + "   Next Node: " + nextNode)
           context.actorSelection("../" + nextNode.toString()) ! Rumor(message)
         }
       }
@@ -40,7 +41,6 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
       }
     }
     case PushSum(ps,pw) => {
-      println("Index: " + idx + "   s: " + s + "   ps: " + ps)
       if ( ((((s + ps) / 2) / ((w + pw) / 2)) - (s / w)) < (10E-10) ) {
         cycleCounter = cycleCounter + 1
       }
@@ -48,6 +48,11 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
         cycleCounter = 0
       }
       if (cycleCounter < 3) {
+
+        //if (idx == 7) {
+        //  println("Index: " + idx + "   s: " + s + "   ps: " + ps)
+        //}
+
         s = (s + ps) / 2
         w = (w + pw) / 2
         val t = new Topology()

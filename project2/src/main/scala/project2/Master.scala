@@ -19,10 +19,13 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         //println("It works!!!")
         numNodes = numOfNodes
         if (top == 1 || top == 3) {
-          numNodes = pow(numOfNodes,3).toInt
+          val c = new Cube()
+          numNodes = c.getCubeSize(numOfNodes)
+          //println("num nodes: " + numNodes)
         }
         for (i <- 0 to numNodes) {
           // Create the actors
+          println("Actors: " + i)
           context.actorOf(Props(new Worker(i, numNodes, top, alg)), i.toString)
         }
         // Starting time for the algorithm..

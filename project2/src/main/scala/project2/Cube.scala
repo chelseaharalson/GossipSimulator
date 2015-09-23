@@ -3,7 +3,6 @@ package project2
 import scala.math._
 import scala.util.Random
 import java.util.Scanner
-import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by chelsea on 9/17/15.
@@ -26,7 +25,7 @@ class Cube {
     NODES = scan.nextInt()
     EDGES = scan.nextInt()
     val cubeList = Array.ofDim[Int](EDGES,2)
-    println("Nodes: " + NODES + "    Edges: " + EDGES)
+    //println("Nodes: " + NODES + "    Edges: " + EDGES)
 
     for (i <- 0 to EDGES-1) {
       node1 = scan.nextInt()
@@ -100,10 +99,6 @@ class Cube {
     var links = ""  // Holds the final output
     var link = 0    // Counts the number of links
 
-    //var cubeArray = Array.ofDim[Int](EDGES,2)
-    //var cubeArr = new ArrayBuffer[ArrayBuffer[Int]]
-    //var cubeA = ArrayBuffer[Int](EDGES,2)
-
     for (row <- 0 to SIDE) {
       for (col <- 0 to SIDE) {
         for (depth <- 0 to SIDE) {
@@ -113,8 +108,6 @@ class Cube {
           if(depth != SIDE-1) {
             links += "%d %d\n".format(current, current+1)
             link = link + 1
-            //cubeArr(row,col) += (current, current+1)
-            //cubeArray(row,col) = current
           }
 
           // If not last col
@@ -137,6 +130,16 @@ class Cube {
 
   // Gets smallest cube size
   def getCubeSize(numOfNodes: Int): Int = {
+    var factor: Int = 3
+    while (numOfNodes > pow(factor,3)) {
+      factor = factor + 1
+    }
+    val p = pow(factor,3)
+    p.toInt
+  }
+
+  // Gets smallest cube size
+  def getCubeFactor(numOfNodes: Int): Int = {
     var factor: Int = 3
     while (numOfNodes > pow(factor,3)) {
       factor = factor + 1
