@@ -15,6 +15,14 @@ class Cube {
   var neighborList = Array.ofDim[Int](6)
   var imperfectList = Array.ofDim[Int](7)
 
+  // Initialize with negative so 0 doesn't get counted as duplicate
+  for (i <- 0 until neighborList.size) {
+    neighborList(i) = -1
+  }
+  for (i <- 0 until imperfectList.size) {
+    imperfectList(i) = -1
+  }
+
   var node1: Int = 0
   var node2: Int = 0
 
@@ -28,7 +36,7 @@ class Cube {
     val cubeList = Array.ofDim[Int](EDGES,2)
     //println("Nodes: " + NODES + "    Edges: " + EDGES)
 
-    for (i <- 0 to EDGES-1) {
+    for (i <- 0 until EDGES) {
       node1 = scan.nextInt()
       node2 = scan.nextInt()
 
@@ -37,7 +45,7 @@ class Cube {
     }
 
     var counter = 0
-    for (i <- 0 to EDGES-1) {
+    for (i <- 0 until EDGES) {
       //println(cubeList(i)(0) + ", " + cubeList(i)(1))
       if (cubeList(i)(0) == idx) {
         if (checkDuplicates(cubeList(i)(1)) == false) {
@@ -55,7 +63,7 @@ class Cube {
 
     // If imperfect, then add into neighborList a random node that is NOT in the neighborList
     if (imperfect == true) {
-      for (i <- 0 to neighborList.size-1) {
+      for (i <- 0 until neighborList.size) {
         imperfectList(i) = neighborList(i)
       }
       var randNode = Random.nextInt(NODES)
@@ -64,29 +72,36 @@ class Cube {
         randNode = Random.nextInt(NODES)
       }
       imperfectList(counter) = randNode
+      counter = counter + 1
     }
 
     // Prints out neighbor list - used for debugging
-    println("Neighbor List (3D): ")
+    /*println("Neighbor List (3D): ")
     println("Counter: " + counter)
-    for (i <- 0 to neighborList.size-1) {
+    for (i <- 0 until neighborList.size) {
       println(neighborList(i))
-    }
+    }*/
 
     // Prints out neighbor list for imperfect 3D - used for debugging
     /*println("Neighbor List (3D Imperfect): ")
-    for (i <- 0 to imperfectList.size-1) {
+    println("Counter: " + counter)
+    for (i <- 0 until imperfectList.size) {
       println(imperfectList(i))
     }*/
 
     val r = Random.nextInt(counter)
     //println("RANDOM: " + neighborList(r))
-    neighborList(r)
+    if (imperfect == true) {
+      imperfectList(r)
+    }
+    else {
+      neighborList(r)
+    }
   }
 
   def checkDuplicates(num: Int): Boolean = {
     var duplicate = false
-    for (i <- 0 to neighborList.size-1) {
+    for (i <- 0 until neighborList.size) {
       if (num == neighborList(i)) {
         duplicate = true
       }
@@ -136,7 +151,7 @@ class Cube {
       }
     }
     // return #Nodes, #Edges, links ...
-    System.out.println(links)
+    //System.out.println(links)
     "%d %d\n%s".format(SIDE*SIDE*SIDE, link, links)
   }
 

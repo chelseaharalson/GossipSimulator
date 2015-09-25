@@ -23,7 +23,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
           numNodes = c.getCubeSize(numOfNodes)
           //println("num nodes: " + numNodes)
         }
-        for (i <- 0 to numNodes-1) {
+        for (i <- 0 until numNodes) {
           // Create the actors
           //println("Actors: " + i)
           context.actorOf(Props(new Worker(i, numNodes, top, alg)), i.toString)
