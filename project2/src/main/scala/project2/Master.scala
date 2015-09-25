@@ -46,26 +46,24 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         }
       }
     }
-    case FinishGossip(i) => {
+    case FinishGossip(idx) => {
       //println("FINISHED INDEX: " + i)
       finishedCount = finishedCount + 1
-      println("Finished Count: " + finishedCount + "  Index: " + i + "   Num of Nodes: " + numNodes)
-      //val n = numNodes-1
+      println("Finished Count: " + finishedCount + "  Index: " + idx + "   Num of Nodes: " + numNodes)
       if (numNodes == finishedCount) {
         val b = System.currentTimeMillis - startTime
-        println("Time: " + b + " ms")
+        println("Convergence Time: " + b + " ms")
         System.exit(0)
       }
     }
     case FinishPushSum(s,w) => {
-      finishedCount = finishedCount + 1
-      println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
-      //val n = numNodes-1
-      if (numNodes == finishedCount) {
+      //finishedCount = finishedCount + 1
+      //println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
+      //if (numNodes == finishedCount) {
         val b = System.currentTimeMillis - startTime
-        println("Time: " + b + " ms")
+        println("Convergence Time: " + b + " ms")
         System.exit(0)
-      }
+      //}
     }
   }
 }

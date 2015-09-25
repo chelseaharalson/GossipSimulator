@@ -1,7 +1,6 @@
 package project2
 
 import akka.actor._
-import scala.util.Random
 
 /**
  * Created by chelsea on 9/15/15.
@@ -25,17 +24,17 @@ object Main {
       System.exit(0)
     }
 
-    val t = new Topology()
+    /*val t = new Topology()
     t.numOfNodes = args(0).toInt
     t.idx = 9
     t.topType = topologyType.indexOf(args(1))
     for (i <- 0 to 100) {
       println("Next Node = " + t.findNode())
-    }
+    }*/
 
-    /*val system = ActorSystem("Gossip-PushSum")
+    val system = ActorSystem("Gossip-PushSum")
     val master = system.actorOf(Props(new Master(args(0).toInt, topologyType.indexOf(args(1)), algorithmType.indexOf(args(2)))), "master")
-    master ! "CreateActors"*/
+    master ! "CreateActors"
   }
 
   // Checks if parameter is a number

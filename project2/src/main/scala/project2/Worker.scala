@@ -14,6 +14,7 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
   var cycleCounter: Int = 0
   var s: Double = idx
   var w: Double = 1
+  var pushSumTermination: Int = 3
 
   def receive = {
     // Gossip Rumor
@@ -26,9 +27,9 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
         t.topType = top
         t.idx = idx
         //println(t.findNode())
-        // Go through 10 times and send to new random node
+        // Go through 8 times and send to new random node
         // Guarantee finish if equal to number of nodes
-        for (i <- 0 to numOfTimesSent) {
+        for (i <- 0 until numOfTimesSent) {
           val nextNode = t.findNode()
           //println("Index: " + t.idx + "   Next Node: " + nextNode)
           context.actorSelection("../" + nextNode.toString()) ! Rumor(message)
@@ -49,9 +50,9 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
       }
       if (cycleCounter < 3) {
 
-        //if (idx == 7) {
-        //  println("Index: " + idx + "   s: " + s + "   ps: " + ps)
-        //}
+        /*if (idx == 3) {
+          println("Index: " + idx + "   s: " + s + "   ps: " + ps)
+        }*/
 
         println("Index: " + idx + "   s: " + s + "   ps: " + ps)
 
@@ -66,7 +67,7 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
           context.actorSelection("../" + nextNode.toString()) ! PushSum(s, w)
         }
       }
-      if (cycleCounter == 3) {
+      if (cycleCounter == pushSumTermination) {
         context.parent ! FinishPushSum(s, w)
       }
     }

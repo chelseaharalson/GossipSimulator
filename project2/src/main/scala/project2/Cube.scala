@@ -9,8 +9,8 @@ import java.util.Scanner
  */
 
 class Cube {
-  var NODES: Int = 0
-  var EDGES: Int = 0
+  var nodes: Int = 0
+  var edges: Int = 0
 
   var neighborList = Array.ofDim[Int](6)
   var imperfectList = Array.ofDim[Int](7)
@@ -31,12 +31,12 @@ class Cube {
   def getRandomCubeNeighbor(input: String, idx: Int): Int = {
     //println(input)
     val scan: Scanner = new Scanner(input)
-    NODES = scan.nextInt()
-    EDGES = scan.nextInt()
-    val cubeList = Array.ofDim[Int](EDGES,2)
-    //println("Nodes: " + NODES + "    Edges: " + EDGES)
+    nodes = scan.nextInt()
+    edges = scan.nextInt()
+    val cubeList = Array.ofDim[Int](edges,2)
+    //println("Nodes: " + nodes + "    Edges: " + edges)
 
-    for (i <- 0 until EDGES) {
+    for (i <- 0 until edges) {
       node1 = scan.nextInt()
       node2 = scan.nextInt()
 
@@ -45,7 +45,7 @@ class Cube {
     }
 
     var counter = 0
-    for (i <- 0 until EDGES) {
+    for (i <- 0 until edges) {
       //println(cubeList(i)(0) + ", " + cubeList(i)(1))
       if (cubeList(i)(0) == idx) {
         if (checkDuplicates(cubeList(i)(1)) == false) {
@@ -66,10 +66,10 @@ class Cube {
       for (i <- 0 until neighborList.size) {
         imperfectList(i) = neighborList(i)
       }
-      var randNode = Random.nextInt(NODES)
+      var randNode = Random.nextInt(nodes)
       // Go through neighborList and assign random number that is not found in there
       while (neighborList.indexOf(randNode) > 0) {
-        randNode = Random.nextInt(NODES)
+        randNode = Random.nextInt(nodes)
       }
       imperfectList(counter) = randNode
       counter = counter + 1
@@ -112,47 +112,45 @@ class Cube {
 
   // Generate the cube
   def generateCube(n: Int): String = {
-    val SIDE = n    // Number of nodes in one side of the cube
-    var links = ""  // Holds the final output
-    var link = 0    // Counts the number of links
-    val nodes = pow(SIDE,3)
+    val cubeFactor = n
+    var cubeListString = ""
+    var cubeEdges = 0
+    val nodes = pow(cubeFactor,3)
 
-    for (row <- 0 until SIDE) {
-      for (col <- 0 until SIDE) {
-        for (depth <- 0 until SIDE) {
-          val current = depth + (col * SIDE) + (row * SIDE * SIDE)
+    for (row <- 0 until cubeFactor) {
+      for (col <- 0 until cubeFactor) {
+        for (depth <- 0 until cubeFactor) {
+          val currentNode = depth + (col * cubeFactor) + (row * cubeFactor * cubeFactor)
 
           // If not last depth
-          if(depth != SIDE-1) {
-            if ((current < nodes) && ((current+1) < nodes)) {
-              links += "%d %d\n".format(current, current+1)
-              //println("Current: " + current + " CUR: " + current+1)
-              link = link + 1
+          if(depth != cubeFactor-1) {
+            if ((currentNode < nodes) && ((currentNode+1) < nodes)) {
+              cubeListString += "%d %d\n".format(currentNode, currentNode+1)
+              cubeEdges = cubeEdges + 1
             }
           }
 
           // If not last col
-          if(col != SIDE-1) {
-            if ((current < nodes) && ((current + SIDE) < nodes)) {
-              links += "%d %d\n".format(current, current + SIDE)
-              //println("Current: " + current + " Side: " + SIDE + " CURRENT+SIDE: " + (current + SIDE))
-              link = link + 1
+          if(col != cubeFactor-1) {
+            if ((currentNode < nodes) && ((currentNode + cubeFactor) < nodes)) {
+              cubeListString += "%d %d\n".format(currentNode, currentNode + cubeFactor)
+              cubeEdges = cubeEdges + 1
             }
           }
 
           // If not last row
-          if(row != SIDE-1) {
-            if ((current < nodes) && ((current + (SIDE * SIDE)) < nodes)) {
-              links += "%d %d\n".format(current, current + (SIDE * SIDE))
-              link = link + 1
+          if(row != cubeFactor-1) {
+            if ((currentNode < nodes) && ((currentNode + (cubeFactor * cubeFactor)) < nodes)) {
+              cubeListString += "%d %d\n".format(currentNode, currentNode + (cubeFactor * cubeFactor))
+              cubeEdges = cubeEdges + 1
             }
           }
         }
       }
     }
-    // return #Nodes, #Edges, links ...
-    //System.out.println(links)
-    "%d %d\n%s".format(SIDE*SIDE*SIDE, link, links)
+    // return Nodes, Edges, Cube List
+    //System.out.println(cubeListString)
+    "%d %d\n%s".format(cubeFactor*cubeFactor*cubeFactor, cubeEdges, cubeListString)
   }
 
   // Gets smallest cube size
@@ -165,7 +163,7 @@ class Cube {
     p.toInt
   }
 
-  // Gets smallest cube size
+  // Gets smallest cube factor
   def getCubeFactor(numOfNodes: Int): Int = {
     var factor: Int = 3
     while (numOfNodes > pow(factor,3)) {
