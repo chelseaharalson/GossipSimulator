@@ -67,11 +67,11 @@ class Cube {
     }
 
     // Prints out neighbor list - used for debugging
-    /*println("Neighbor List (3D): ")
+    println("Neighbor List (3D): ")
     println("Counter: " + counter)
     for (i <- 0 to neighborList.size-1) {
       println(neighborList(i))
-    }*/
+    }
 
     // Prints out neighbor list for imperfect 3D - used for debugging
     /*println("Neighbor List (3D Imperfect): ")
@@ -102,30 +102,32 @@ class Cube {
     var link = 0    // Counts the number of links
     val nodes = pow(SIDE,3)
 
-    for (row <- 0 to SIDE) {
-      for (col <- 0 to SIDE) {
-        for (depth <- 0 to SIDE) {
+    for (row <- 0 until SIDE) {
+      for (col <- 0 until SIDE) {
+        for (depth <- 0 until SIDE) {
           val current = depth + (col * SIDE) + (row * SIDE * SIDE)
 
           // If not last depth
           if(depth != SIDE-1) {
-            if ((current < nodes) && (current+1 < nodes)) {
+            if ((current < nodes) && ((current+1) < nodes)) {
               links += "%d %d\n".format(current, current+1)
+              //println("Current: " + current + " CUR: " + current+1)
               link = link + 1
             }
           }
 
           // If not last col
           if(col != SIDE-1) {
-            if ((current < nodes) && (current + SIDE < nodes)) {
+            if ((current < nodes) && ((current + SIDE) < nodes)) {
               links += "%d %d\n".format(current, current + SIDE)
+              //println("Current: " + current + " Side: " + SIDE + " CURRENT+SIDE: " + (current + SIDE))
               link = link + 1
             }
           }
 
           // If not last row
           if(row != SIDE-1) {
-            if ((current < nodes) && (current + (SIDE * SIDE) < nodes)) {
+            if ((current < nodes) && ((current + (SIDE * SIDE)) < nodes)) {
               links += "%d %d\n".format(current, current + (SIDE * SIDE))
               link = link + 1
             }
@@ -134,6 +136,7 @@ class Cube {
       }
     }
     // return #Nodes, #Edges, links ...
+    System.out.println(links)
     "%d %d\n%s".format(SIDE*SIDE*SIDE, link, links)
   }
 
