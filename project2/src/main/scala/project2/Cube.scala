@@ -21,6 +21,7 @@ class Cube {
   var imperfect: Boolean = false
 
   def getRandomCubeNeighbor(input: String, idx: Int): Int = {
+    //println(input)
     val scan: Scanner = new Scanner(input)
     NODES = scan.nextInt()
     EDGES = scan.nextInt()
@@ -67,17 +68,18 @@ class Cube {
 
     // Prints out neighbor list - used for debugging
     /*println("Neighbor List (3D): ")
+    println("Counter: " + counter)
     for (i <- 0 to neighborList.size-1) {
       println(neighborList(i))
-    }
+    }*/
 
     // Prints out neighbor list for imperfect 3D - used for debugging
-    println("Neighbor List (3D Imperfect): ")
+    /*println("Neighbor List (3D Imperfect): ")
     for (i <- 0 to imperfectList.size-1) {
       println(imperfectList(i))
     }*/
 
-    val r = Random.nextInt(counter-1)
+    val r = Random.nextInt(counter)
     //println("RANDOM: " + neighborList(r))
     neighborList(r)
   }
@@ -98,6 +100,7 @@ class Cube {
     val SIDE = n    // Number of nodes in one side of the cube
     var links = ""  // Holds the final output
     var link = 0    // Counts the number of links
+    val nodes = pow(SIDE,3)
 
     for (row <- 0 to SIDE) {
       for (col <- 0 to SIDE) {
@@ -106,20 +109,26 @@ class Cube {
 
           // If not last depth
           if(depth != SIDE-1) {
-            links += "%d %d\n".format(current, current+1)
-            link = link + 1
+            if ((current < nodes) && (current+1 < nodes)) {
+              links += "%d %d\n".format(current, current+1)
+              link = link + 1
+            }
           }
 
           // If not last col
           if(col != SIDE-1) {
-            links += "%d %d\n".format(current, current+SIDE)
-            link = link + 1
+            if ((current < nodes) && (current + SIDE < nodes)) {
+              links += "%d %d\n".format(current, current + SIDE)
+              link = link + 1
+            }
           }
 
           // If not last row
           if(row != SIDE-1) {
-            links += "%d %d\n".format(current, current+(SIDE*SIDE))
-            link = link + 1
+            if ((current < nodes) && (current + (SIDE * SIDE) < nodes)) {
+              links += "%d %d\n".format(current, current + (SIDE * SIDE))
+              link = link + 1
+            }
           }
         }
       }

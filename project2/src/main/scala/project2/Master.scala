@@ -25,7 +25,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         }
         for (i <- 0 to numNodes) {
           // Create the actors
-          println("Actors: " + i)
+          //println("Actors: " + i)
           context.actorOf(Props(new Worker(i, numNodes, top, alg)), i.toString)
         }
         // Starting time for the algorithm..
@@ -34,7 +34,8 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
           // Gossip
           case 0 => {
             val randomNode = Random.nextInt(numNodes).toString()
-            val message = "The TA is annoying"
+            //println("NEXT RANDOM NODE: " + randomNode)
+            val message = "annoying"
             context.actorSelection(randomNode) ! Rumor(message)
           }
           // PushSum
@@ -45,9 +46,10 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         }
       }
     }
-    case FinishGossip() => {
+    case FinishGossip(i) => {
+      println("FINISHED INDEX: " + i)
       finishedCount = finishedCount + 1
-      println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
+      //println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
       //val n = numNodes-1
       if (numNodes == finishedCount) {
         val b = System.currentTimeMillis - startTime

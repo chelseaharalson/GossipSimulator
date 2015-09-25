@@ -26,6 +26,7 @@ class Topology() {
         val cube = new Cube()
         val sideNodes = cube.getCubeFactor(numOfNodes)
         nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
+        //println("@@@@@@@@@@NEXT RANDOM NODE: " + nextNode)
       }
       // Line
       case 2 => {
