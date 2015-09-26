@@ -36,10 +36,10 @@ object Main {
     if (args(1) == "3D" || args(1) == "imp3D") {
       val c = new Cube()
       val n = c.getCubeSize(args(0).toInt)
-      println("Number of Nodes: " + n + "; Topology Type: " + args(1) + "; Algorithm: " + args(2))
+      println("Number of Nodes: " + args(0) + "; Topology Type: " + args(1) + "; Algorithm: " + args(2) + "; Size of Network: " + n)
     }
     else {
-      println("Number of Nodes: " + args(0) + "; Topology Type: " + args(1) + "; Algorithm: " + args(2))
+      println("Number of Nodes: " + args(0) + "; Topology Type: " + args(1) + "; Algorithm: " + args(2) + "; Size of Network: " + args(0))
     }
 
     val system = ActorSystem("Gossip-PushSum")
