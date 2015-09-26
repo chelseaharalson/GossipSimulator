@@ -48,7 +48,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
     case FinishGossip(idx) => {
       //println("FINISHED INDEX: " + i)
       finishedCount = finishedCount + 1
-      println("Finished Count: " + finishedCount + "  Index: " + idx + "   Num of Nodes: " + numNodes)
+      //println("Finished Count: " + finishedCount + "  Index: " + idx + "   Num of Nodes: " + numNodes)
       if (numNodes == finishedCount) {
         val b = System.currentTimeMillis - startTime
         println("Convergence Time: " + b + " ms")
@@ -58,7 +58,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
     case FinishPushSum(idx,s,w) => {
       finishedCount = finishedCount + 1
       //println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
-      println("Index: " + idx + "   s: " + s + "   w: " + w)
+      //println("Index: " + idx + "   s: " + s + "   w: " + w)
       if (numNodes == finishedCount) {
         val b = System.currentTimeMillis - startTime
         println("Convergence Time: " + b + " ms")

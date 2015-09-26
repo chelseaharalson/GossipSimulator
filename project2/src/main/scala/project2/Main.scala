@@ -24,6 +24,7 @@ object Main {
       System.exit(0)
     }
 
+    // Used for testing purposes
     /*val t = new Topology()
     t.numOfNodes = args(0).toInt
     t.idx = 9
@@ -31,6 +32,15 @@ object Main {
     for (i <- 0 to 100) {
       println("Next Node = " + t.findNode())
     }*/
+
+    if (args(1) == "3D" || args(1) == "imp3D") {
+      val c = new Cube()
+      val n = c.getCubeSize(args(0).toInt)
+      println("Number of Nodes: " + n + "; Topology Type: " + args(1) + "; Algorithm: " + args(2))
+    }
+    else {
+      println("Number of Nodes: " + args(0) + "; Topology Type: " + args(1) + "; Algorithm: " + args(2))
+    }
 
     val system = ActorSystem("Gossip-PushSum")
     val master = system.actorOf(Props(new Master(args(0).toInt, topologyType.indexOf(args(1)), algorithmType.indexOf(args(2)))), "master")

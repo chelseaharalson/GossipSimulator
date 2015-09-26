@@ -90,7 +90,7 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
           pushSumFinished = true
         }
         if (cycleCounter == pushSumTermination) {
-          context.parent ! FinishPushSum(idx,s, w)
+          context.parent ! FinishPushSum(idx, s, w)
         }
       }
     }
