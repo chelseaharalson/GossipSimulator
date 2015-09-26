@@ -1,7 +1,6 @@
 package project2
 
 import akka.actor._
-import scala.math._
 import scala.util.Random
 
 /**

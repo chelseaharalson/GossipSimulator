@@ -1,6 +1,7 @@
 package project2
 
 import akka.actor._
+import scala.util.Random
 
 /**
  * Created by chelsea on 9/15/15.
@@ -16,6 +17,8 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
   var w: Double = 1
   var pushSumTermination: Int = 3
   var pushSumFinished: Boolean = false
+  var failureTest: Boolean = false
+  var failureIndex: Int = 5
 
   def receive = {
     // Gossip Rumor
@@ -30,10 +33,24 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
         //println(t.findNode())
         // Go through 8 times and send to new random node
         // Guarantee finish if equal to number of nodes
-        for (i <- 0 until numOfTimesSent) {
-          val nextNode = t.findNode()
-          //println("Index: " + t.idx + "   Next Node: " + nextNode)
-          context.actorSelection("../" + nextNode.toString()) ! Rumor(message)
+        if (failureTest == false) {
+          for (i <- 0 until numOfTimesSent) {
+            val nextNode = t.findNode()
+            //println("Index: " + t.idx + "   Next Node: " + nextNode)
+            context.actorSelection("../" + nextNode.toString()) ! Rumor(message)
+          }
+        }
+        else {
+          // Simulate failure
+          val r = Random.nextInt(failureIndex)
+          if (r > 0) {
+            for (i <- 0 until numOfTimesSent) {
+              val nextNode = t.findNode()
+              println("Failure at: " + t.idx)
+              //println("Index: " + t.idx + "   Next Node: " + nextNode)
+              context.actorSelection("../" + nextNode.toString()) ! Rumor(message)
+            }
+          }
         }
       }
       //println("Num Of Messages: " + numOfMessages + "   Index: " + idx)
