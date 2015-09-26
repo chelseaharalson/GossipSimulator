@@ -15,6 +15,7 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
   var s: Double = idx
   var w: Double = 1
   var pushSumTermination: Int = 3
+  var pushSumFinished: Boolean = false
 
   def receive = {
     // Gossip Rumor
@@ -42,33 +43,38 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
       }
     }
     case PushSum(ps,pw) => {
-      if ( ((((s + ps) / 2) / ((w + pw) / 2)) - (s / w)) < (10E-10) ) {
-        cycleCounter = cycleCounter + 1
-      }
-      else if (cycleCounter < 3) {
-        cycleCounter = 0
-      }
-      if (cycleCounter < 3) {
+      if (pushSumFinished == false) {
+        if (((((s + ps) / 2) / ((w + pw) / 2)) - (s / w)) < (10E-10)) {
+          cycleCounter = cycleCounter + 1
+        }
+        else if (cycleCounter < 3) {
+          cycleCounter = 0
+        }
+        if (cycleCounter < 3) {
 
-        /*if (idx == 3) {
+          /*if (idx == 3) {
           println("Index: " + idx + "   s: " + s + "   ps: " + ps)
         }*/
 
-        println("Index: " + idx + "   s: " + s + "   ps: " + ps)
+          //println("Index: " + idx + "   s: " + s + "   ps: " + ps)
 
-        s = (s + ps) / 2
-        w = (w + pw) / 2
-        val t = new Topology()
-        t.numOfNodes = numOfNodes
-        t.topType = top
-        t.idx = idx
-        for (i <- 0 to numOfTimesSent) {
-          val nextNode = t.findNode()
-          context.actorSelection("../" + nextNode.toString()) ! PushSum(s, w)
+          s = (s + ps) / 2
+          w = (w + pw) / 2
+          val t = new Topology()
+          t.numOfNodes = numOfNodes
+          t.topType = top
+          t.idx = idx
+          for (i <- 0 to numOfTimesSent) {
+            val nextNode = t.findNode()
+            context.actorSelection("../" + nextNode.toString()) ! PushSum(s, w)
+          }
         }
-      }
-      if (cycleCounter == pushSumTermination) {
-        context.parent ! FinishPushSum(s, w)
+        else {
+          pushSumFinished = true
+        }
+        if (cycleCounter == pushSumTermination) {
+          context.parent ! FinishPushSum(idx,s, w)
+        }
       }
     }
     case msg: String => {

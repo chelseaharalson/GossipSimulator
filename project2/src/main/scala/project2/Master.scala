@@ -56,14 +56,15 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         System.exit(0)
       }
     }
-    case FinishPushSum(s,w) => {
-      //finishedCount = finishedCount + 1
+    case FinishPushSum(idx,s,w) => {
+      finishedCount = finishedCount + 1
       //println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
-      //if (numNodes == finishedCount) {
+      println("Index: " + idx + "   s: " + s + "   w: " + w)
+      if (numNodes == finishedCount) {
         val b = System.currentTimeMillis - startTime
         println("Convergence Time: " + b + " ms")
         System.exit(0)
-      //}
+      }
     }
   }
 }
