@@ -34,7 +34,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
           case 0 => {
             val randomNode = Random.nextInt(numNodes).toString()
             //println("NEXT RANDOM NODE: " + randomNode)
-            val message = "annoying"
+            val message = "hi"
             context.actorSelection(randomNode) ! Rumor(message)
           }
           // PushSum

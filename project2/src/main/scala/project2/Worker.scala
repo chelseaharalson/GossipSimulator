@@ -10,7 +10,7 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
   var numOfMessages: Int = 0
   var gossipTermination: Int = 10
-  var numOfTimesSent: Int = 8
+  var numOfTimesSent: Int = 12
   var messageCounter: Int = 0
   var cycleCounter: Int = 0
   var s: Double = idx
@@ -43,10 +43,17 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
         else {
           // Simulate failure
           val r = Random.nextInt(failureIndex)
+          // Generate numbers 0 to 4
+          // If r = 0, then FAILED
+          // Else go on like normal..
+          //println("r: " + r)
+          if (r == 0) {
+            println("FAILED CONNECTION!")
+          }
           if (r > 0) {
             for (i <- 0 until numOfTimesSent) {
               val nextNode = t.findNode()
-              println("Failure at: " + t.idx)
+              //println("Failure at: " + t.idx)
               //println("Index: " + t.idx + "   Next Node: " + nextNode)
               context.actorSelection("../" + nextNode.toString()) ! Rumor(message)
             }
