@@ -25,11 +25,13 @@ object Main {
     }
 
     // Used for testing purposes
-    /*val t = new Topology()
-    t.numOfNodes = args(0).toInt
-    t.idx = 9
-    t.topType = topologyType.indexOf(args(1))
-    for (i <- 0 to 100) {
+    //val t = new Topology(args(0).toInt)
+    //println("Next Node = " + t.findNode())
+    //t.numOfNodes = args(0).toInt
+    //t.idx = 9
+    /*t.topType = topologyType.indexOf(args(1))
+    for (i <- 0 until 26) {
+      t.idx = i
       println("Next Node = " + t.findNode())
     }*/
 

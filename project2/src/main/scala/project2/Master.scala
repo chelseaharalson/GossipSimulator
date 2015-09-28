@@ -1,6 +1,7 @@
 package project2
 
 import akka.actor._
+import scala.math._
 import scala.util.Random
 
 /**
@@ -18,9 +19,10 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         //println("It works!!!")
         numNodes = numOfNodes
         if (top == 1 || top == 3) {
-          val c = new Cube()
-          numNodes = c.getCubeSize(numOfNodes)
+          //val c = new Cube()
+          //numNodes = c.getCubeSize(numOfNodes)
           //println("num nodes: " + numNodes)
+          numNodes = getCubeSize(numOfNodes)
         }
         for (i <- 0 until numNodes) {
           // Create the actors
@@ -65,5 +67,15 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         System.exit(0)
       }
     }
+  }
+
+  // Gets smallest cube size
+  def getCubeSize(numOfNodes: Int): Int = {
+    var factor: Int = 3
+    while (numOfNodes > pow(factor,3)) {
+      factor = factor + 1
+    }
+    val p = pow(factor,3)
+    p.toInt
   }
 }

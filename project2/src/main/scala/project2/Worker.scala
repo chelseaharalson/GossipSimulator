@@ -20,14 +20,15 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
   var failureTest: Boolean = false
   var failureIndex: Int = 5
 
+  val t = new Topology(numOfNodes)
+  //t.numOfNodes = numOfNodes
+
   def receive = {
     // Gossip Rumor
     case Rumor(message) => {
       numOfMessages = numOfMessages + 1
       if (numOfMessages <= gossipTermination) {
         //println("Index: " + idx + "; Num of Messages: " + numOfMessages)
-        val t = new Topology()
-        t.numOfNodes = numOfNodes
         t.topType = top
         t.idx = idx
         //println(t.findNode())
@@ -84,8 +85,8 @@ class Worker(idx: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
           s = (s + ps) / 2
           w = (w + pw) / 2
-          val t = new Topology()
-          t.numOfNodes = numOfNodes
+          //val t = new Topology(numOfNodes)
+          //t.numOfNodes = numOfNodes
           t.topType = top
           t.idx = idx
           for (i <- 0 to numOfTimesSent) {

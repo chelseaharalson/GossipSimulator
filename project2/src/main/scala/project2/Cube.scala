@@ -109,7 +109,6 @@ class Cube {
     duplicate
   }
 
-
   // Generate the cube
   def generateCube(n: Int): String = {
     val cubeFactor = n
