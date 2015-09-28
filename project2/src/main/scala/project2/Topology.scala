@@ -35,12 +35,6 @@ class Topology(numOfNodes: Integer) {
   val sideNodes = getCubeFactor(numOfNodes)
   var cl = generateCube(sideNodes)
 
-  /*val cube = new Cube()
-  val sideNodes = cube.getCubeFactor(numOfNodes)
-  val cubeList = cube.generateCube(sideNodes)*/
-  // cube array
-  // neighbors array
-
   def findNode() = {
     var nextNode = 0
 
@@ -53,12 +47,7 @@ class Topology(numOfNodes: Integer) {
       }
       // 3D
       case 1 => {
-        //val cube = new Cube()
-        //val sideNodes = cube.getCubeFactor(numOfNodes)
-        //nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
-        //println(cubeListFinal)
         nextNode = getRandomCubeNeighbor(cl,idx)
-        //println("NEXT NODE: " + nextNode)
       }
       // Line
       case 2 => {
@@ -78,10 +67,6 @@ class Topology(numOfNodes: Integer) {
       }
       // Imperfect 3D
       case 3 => {
-        //val cube = new Cube()
-        //val sideNodes = cube.getCubeFactor(numOfNodes)
-        //cube.imperfect = true
-        //nextNode = cube.getRandomCubeNeighbor(cube.generateCube(sideNodes),idx)
         imperfect = true
         nextNode = getRandomCubeNeighbor(cl,idx)
       }
@@ -91,37 +76,15 @@ class Topology(numOfNodes: Integer) {
   }
 
   def getRandomCubeNeighbor(cl: Array[Array[Int]], idx: Int): Int = {
-    //println(input)
-    /*val scan: Scanner = new Scanner(input)
-    nodes = scan.nextInt()
-    edges = scan.nextInt()
-    val cubeList = Array.ofDim[Int](edges,2)
-    //println("Nodes: " + nodes + "    Edges: " + edges)
-
-    for (i <- 0 until edges) {
-      node1 = scan.nextInt()
-      node2 = scan.nextInt()
-
-      cubeList(i)(0) = node1
-      cubeList(i)(1) = node2
-    }*/
-    //val cubeList = Array.ofDim[Int](edges,2)
     var counter = 0
     for (i <- 0 until edges) {
-      //println(cubeList(i)(0) + ", " + cubeList(i)(1))
       if (cl(i)(0) == idx) {
-        //if (checkDuplicates(cl(i)(1)) == false) {
-          neighborList(counter) = cl(i)(1)
-          counter = counter + 1
-          //println("COUNTER 1: " + counter)
-        //}
+        neighborList(counter) = cl(i)(1)
+        counter = counter + 1
       }
       if (cl(i)(1) == idx) {
-        //if (checkDuplicates(cl(i)(0)) == false) {
-          neighborList(counter) = cl(i)(0)
-          counter = counter + 1
-          //println("COUNTER 2: " + counter)
-        //}
+        neighborList(counter) = cl(i)(0)
+        counter = counter + 1
       }
     }
 

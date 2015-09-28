@@ -2,6 +2,8 @@ package project2
 
 import akka.actor._
 
+import scala.math._
+
 /**
  * Created by chelsea on 9/15/15.
  */
@@ -36,9 +38,12 @@ object Main {
     }*/
 
     if (args(1) == "3D" || args(1) == "imp3D") {
-      val c = new Cube()
-      val n = c.getCubeSize(args(0).toInt)
-      println("Number of Nodes: " + args(0) + "; Topology Type: " + args(1) + "; Algorithm: " + args(2) + "; Size of Network: " + n)
+      var factor: Int = 3
+      while (args(0).toInt > pow(factor,3)) {
+        factor = factor + 1
+      }
+      val n = pow(factor,3)
+      println("Number of Nodes: " + args(0) + "; Topology Type: " + args(1) + "; Algorithm: " + args(2) + "; Size of Network: " + n.toInt)
     }
     else {
       println("Number of Nodes: " + args(0) + "; Topology Type: " + args(1) + "; Algorithm: " + args(2) + "; Size of Network: " + args(0))

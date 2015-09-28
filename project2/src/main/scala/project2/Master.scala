@@ -12,6 +12,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
   var startTime: Long = 0
   var finishedCount: Int = 0
   var numNodes: Int = 0
+  // need array of workers. When creating actors, create array of size of actors/workers.
 
   def receive = {
     case msg: String => {
@@ -19,8 +20,6 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         //println("It works!!!")
         numNodes = numOfNodes
         if (top == 1 || top == 3) {
-          //val c = new Cube()
-          //numNodes = c.getCubeSize(numOfNodes)
           //println("num nodes: " + numNodes)
           numNodes = getCubeSize(numOfNodes)
         }
@@ -46,6 +45,9 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
           }
         }
       }
+    }
+    case WorkerStatus(idxOfWorker, numOfMessagesReceived) => {
+
     }
     case FinishGossip(idx) => {
       //println("FINISHED INDEX: " + i)
