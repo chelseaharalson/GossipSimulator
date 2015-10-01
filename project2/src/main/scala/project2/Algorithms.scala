@@ -6,7 +6,7 @@ package project2
 
 case class Gossip()
 case class Rumor(message: String)
-case class FinishGossip(nodeName: Int)
 case class PushSum(s: Double, w: Double)
 case class FinishPushSum(nodeName: Int, s: Double, w: Double)
-case class WorkerStopped(nodeName: Int)
+case class GetProgress()
+case class SendProgress(nodeName: Int, result: Int)
