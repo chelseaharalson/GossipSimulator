@@ -71,14 +71,6 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         }
       }
     }
-    case FinishPushSum(nodeName,s,w) => {
-      finishedCount = finishedCount + 1
-      if (numNodes == finishedCount) {
-        val b = System.currentTimeMillis - startTime
-        println("Convergence Time: " + b + " ms")
-        System.exit(0)
-      }
-    }
   }
 
   // Gets smallest cube size

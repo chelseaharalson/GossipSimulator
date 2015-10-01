@@ -10,18 +10,18 @@ import scala.collection.mutable.ArrayBuffer
 class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
 
   var numOfMessagesReceived: Int = 0
-  var gossipTermination: Int = 3
-  var numOfTimesSent: Int = 1
+  var gossipTermination: Int = 10
   var messageCounter: Int = 0
   var cycleCounter: Int = 0
   var s: Double = nodeName
   var w: Double = 1
   var pushSumTermination: Int = 3
-  var pushSumFinished: Boolean = false
   var failureTest: Boolean = false
   var failureIndex: Int = 5
   var nodeList = new ArrayBuffer[Int]()
   var receivedMessage = ""
+  var finished = false
+  var receivedSW = false
 
   // Full
   if (top == 0) {
@@ -62,18 +62,42 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
     case Rumor(message) => {
       receivedMessage = message
       numOfMessagesReceived = numOfMessagesReceived + 1
+      finished = numOfMessagesReceived > gossipTermination
+    }
+    case PushSum(ps,pw) => {
+      receivedSW = true
+      if (finished == false) {
+        if (((((s + ps) / 2) / ((w + pw) / 2)) - (s / w)) < (10E-10)) {
+          cycleCounter = cycleCounter + 1
+        }
+        else if (cycleCounter < 3) {
+          cycleCounter = 0
+        }
+
+        if (cycleCounter < 3) {
+          s = (s + ps) / 2
+          w = (w + pw) / 2
+        }
+        else {
+          finished = true
+        }
+      }
     }
     case GetProgress() => {
-      if (receivedMessage != "") {
-        if (numOfMessagesReceived <= gossipTermination) {
+      if (receivedMessage != "" || receivedSW == true) {
+        if (!finished) {
           if (failureTest == false) {
             val nextNode = getRandomNode()
-            //println("NODE NAME: " + nodeName + " NEXT NODE: " + nextNode + " MESSAGE: " + receivedMessage)
-            context.actorSelection("../" + nextNode.toString()) ! Rumor(receivedMessage)
+            if (receivedSW == true) {
+              context.actorSelection("../" + nextNode.toString()) ! PushSum(s,w)
+            }
+            else {
+              context.actorSelection("../" + nextNode.toString()) ! Rumor(receivedMessage)
+            }
           }
         }
       }
-      if (numOfMessagesReceived > gossipTermination) {
+      if (finished) {
         // 1 means finished
         context.parent ! SendProgress(nodeName,1)
       }
@@ -81,39 +105,6 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
         // 0 means still sending
         context.parent ! SendProgress(nodeName,0)
       }
-    }
-    case PushSum(ps,pw) => {
-      /*if (pushSumFinished == false) {
-        if (((((s + ps) / 2) / ((w + pw) / 2)) - (s / w)) < (10E-10)) {
-          cycleCounter = cycleCounter + 1
-        }
-        else if (cycleCounter < 3) {
-          cycleCounter = 0
-        }
-        if (cycleCounter < 3) {
-
-          /*if (idx == 3) {
-          println("Index: " + idx + "   s: " + s + "   ps: " + ps)
-        }*/
-
-          //println("Index: " + idx + "   s: " + s + "   ps: " + ps)
-
-          s = (s + ps) / 2
-          w = (w + pw) / 2
-
-          t.topType = top
-          for (i <- 0 to numOfTimesSent) {
-            val nextNode = t.findNode()
-            context.actorSelection("../" + nextNode.toString()) ! PushSum(s, w)
-          }
-        }
-        else {
-          pushSumFinished = true
-        }
-        if (cycleCounter == pushSumTermination) {
-          context.parent ! FinishPushSum(nodeName, s, w)
-        }
-      }*/
     }
   }
 
