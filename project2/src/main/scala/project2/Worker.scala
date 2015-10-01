@@ -34,7 +34,6 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
   else if (top == 1) {
     val t = new Topology()
     nodeList = t.getCubeNeighbors(nodeName,numOfNodes)
-    //println("Node Name: " + nodeName + "   Node List: " + nodeList)
   }
   // Line
   else if (top == 2) {
@@ -51,7 +50,12 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
       nodeList.+=(nodeName+1)
     }
   }
-
+  // Imperfect 3D
+  else if (top == 3) {
+    val t = new Topology()
+    t.imperfect = true
+    nodeList = t.getCubeNeighbors(nodeName,numOfNodes)
+  }
 
   def receive = {
     // Gossip Rumor
@@ -142,6 +146,11 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
             nextNode = nodeList(0)
           }
         }
+      }
+      // Imperfect 3D
+      case 3 => {
+        pos = Random.nextInt(nodeList.size)
+        nextNode = nodeList(pos)
       }
     }
     nextNode

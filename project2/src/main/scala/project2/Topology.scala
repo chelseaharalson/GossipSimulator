@@ -79,6 +79,13 @@ class Topology() {
         result.+=(node1)
       }
     }
+    if (imperfect == true) {
+      var r = 0
+      do {
+        r = Random.nextInt(nodesCube.toInt)
+      } while (result.indexOf(r) > -1)
+      result.+=(r)
+    }
     result
   }
 

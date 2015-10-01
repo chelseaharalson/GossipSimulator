@@ -20,8 +20,9 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
     case msg: String => {
       if (msg.equals("CreateActors")) {
         /*val t = new Topology()
+        t.imperfect = true
         var aList = ArrayBuffer[Int]()
-        aList = t.getCubeNeighbors(17,8)
+        aList = t.getCubeNeighbors(6,8)
         println(aList)*/
         numNodes = numOfNodes
         if (top == 1 || top == 3) {
@@ -72,8 +73,6 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
     }
     case FinishPushSum(nodeName,s,w) => {
       finishedCount = finishedCount + 1
-      //println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
-      //println("Index: " + idx + "   s: " + s + "   w: " + w)
       if (numNodes == finishedCount) {
         val b = System.currentTimeMillis - startTime
         println("Convergence Time: " + b + " ms")
