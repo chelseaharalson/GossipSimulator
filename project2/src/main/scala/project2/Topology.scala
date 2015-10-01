@@ -7,7 +7,7 @@ import java.util.Scanner
 /**
  * Created by chelsea on 9/15/15.
  */
-class Topology(numOfNodes: Integer) {
+class Topology(numOfNodes: Int) {
 
   var idx: Int = 0
   var topType: Int = 0

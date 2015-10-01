@@ -46,10 +46,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         }
       }
     }
-    case WorkerStatus(idxOfWorker, numOfMessagesReceived) => {
-
-    }
-    case FinishGossip(idx) => {
+    case FinishGossip(nodeName) => {
       //println("FINISHED INDEX: " + i)
       finishedCount = finishedCount + 1
       //println("Finished Count: " + finishedCount + "  Index: " + idx + "   Num of Nodes: " + numNodes)
@@ -59,7 +56,7 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
         System.exit(0)
       }
     }
-    case FinishPushSum(idx,s,w) => {
+    case FinishPushSum(nodeName,s,w) => {
       finishedCount = finishedCount + 1
       //println("Finished Count: " + finishedCount + "  Num of Nodes: " + numNodes)
       //println("Index: " + idx + "   s: " + s + "   w: " + w)
