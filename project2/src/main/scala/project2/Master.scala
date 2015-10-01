@@ -3,6 +3,7 @@ package project2
 import akka.actor._
 import scala.math._
 import scala.util.Random
+import scala.collection.mutable.ArrayBuffer
 
 /**
  * Created by chelsea on 9/15/15.
@@ -18,10 +19,12 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
   def receive = {
     case msg: String => {
       if (msg.equals("CreateActors")) {
-        //println("It works!!!")
+        /*val t = new Topology()
+        var aList = ArrayBuffer[Int]()
+        aList = t.getCubeNeighbors(17,8)
+        println(aList)*/
         numNodes = numOfNodes
         if (top == 1 || top == 3) {
-          //println("num nodes: " + numNodes)
           numNodes = getCubeSize(numOfNodes)
         }
         for (i <- 0 until numNodes) {
@@ -34,7 +37,6 @@ class Master(numOfNodes: Int, top: Int, alg: Int) extends Actor {
           // Gossip
           case 0 => {
             val randomNode = Random.nextInt(numNodes).toString()
-            //println("NEXT RANDOM NODE: " + randomNode)
             val message = "hi"
             context.actorSelection(randomNode) ! Rumor(message)
           }

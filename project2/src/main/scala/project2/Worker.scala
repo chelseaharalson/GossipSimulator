@@ -23,14 +23,18 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
   var nodeList = new ArrayBuffer[Int]()
   var receivedMessage = ""
 
-  //val t = new Topology(numOfNodes)
-
   // Full
   if (top == 0) {
     for (i <- 0 until numOfNodes) {
       nodeList.+=(i)
     }
     nodeList.remove(nodeName)
+  }
+  // 3D
+  else if (top == 1) {
+    val t = new Topology()
+    nodeList = t.getCubeNeighbors(nodeName,numOfNodes)
+    //println("Node Name: " + nodeName + "   Node List: " + nodeList)
   }
   // Line
   else if (top == 2) {
@@ -59,7 +63,7 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
       if (receivedMessage != "") {
         if (numOfMessagesReceived <= gossipTermination) {
           if (failureTest == false) {
-            val nextNode = getRandomLine()
+            val nextNode = getRandomNode()
             //println("NODE NAME: " + nodeName + " NEXT NODE: " + nextNode + " MESSAGE: " + receivedMessage)
             context.actorSelection("../" + nextNode.toString()) ! Rumor(receivedMessage)
           }
@@ -109,12 +113,18 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
     }
   }
 
-  def getRandomLine(): Int = {
+  def getRandomNode(): Int = {
     var nextNode = 0
+    var pos = 0
     top match {
       // Full
       case 0 => {
         nextNode = Random.nextInt(nodeList.size)
+      }
+      // 3D
+      case 1 => {
+        pos = Random.nextInt(nodeList.size)
+        nextNode = nodeList(pos)
       }
       // Line
       case 2 => {
