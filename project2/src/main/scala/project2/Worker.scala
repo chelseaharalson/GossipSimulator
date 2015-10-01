@@ -17,7 +17,7 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
   var w: Double = 1
   var pushSumTermination: Int = 3
   var failureTest: Boolean = false
-  var failureIndex: Int = 5
+  var failureIndex: Int = 3
   var nodeList = new ArrayBuffer[Int]()
   var receivedMessage = ""
   var finished = false
@@ -84,9 +84,19 @@ class Worker(nodeName: Int, numOfNodes: Int, top: Int, alg: Int) extends Actor {
       }
     }
     case GetProgress() => {
+      var sendMessage = true
+      if (failureTest) {
+        val r = Random.nextInt(failureIndex)
+        if (r == 0) {
+          sendMessage = false
+        }
+      }
+      else {
+        sendMessage = true
+      }
       if (receivedMessage != "" || receivedSW == true) {
         if (!finished) {
-          if (failureTest == false) {
+          if (sendMessage) {
             val nextNode = getRandomNode()
             if (receivedSW == true) {
               context.actorSelection("../" + nextNode.toString()) ! PushSum(s,w)
