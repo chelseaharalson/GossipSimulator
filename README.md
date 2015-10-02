@@ -5,4 +5,4 @@ Project for distributed operating systems. Implementation of Gossip and Push Sum
 	java -jar project2.jar 27 line gossip
 	java -jar project2-bonus.jar 27 full gossip
 
-(These are examples, the 27, line, and gossip are editable. It goes: numOfNodes, topology, algoirthm)
+(These are examples, the 27, line, and gossip are editable. It goes: numOfNodes, topology, algorithm)
